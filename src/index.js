@@ -7,6 +7,8 @@ require("dotenv").config();
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(authRoutes);
 
 mongoose.connect(process.env.MONGO_URI);
