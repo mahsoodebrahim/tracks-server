@@ -1,6 +1,18 @@
 const express = require("express");
+const mongoose = require("mongoose");
+
+require("dotenv").config();
 
 const app = express();
+
+mongoose.connect(process.env.MONGO_URI);
+
+mongoose.connection.on("connected", () => {
+  console.log("Connected to mongo instance");
+});
+mongoose.connection.on("error", (err) => {
+  console.error("Error to mongo instance", err);
+});
 
 app.get("/", (req, res) => {
   res.send("hi there!");
