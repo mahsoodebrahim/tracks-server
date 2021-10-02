@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const authRoutes = require("./routes/authRoutes");
+const requireAuth = require("./middleware/requireAuth");
 
 require("dotenv").config();
 
@@ -22,8 +23,8 @@ mongoose.connection.on("error", (err) => {
   console.error("Error to mongo instance", err);
 });
 
-app.get("/", (req, res) => {
-  res.send("hi there!");
+app.get("/", requireAuth, (req, res) => {
+  res.send(`Your email is ${req.user.email}`);
 });
 
 app.listen(3000, () => {
